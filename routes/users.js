@@ -8,8 +8,8 @@ router.post('/login', (req, res) => {
   const password = req.body.password;
 
   userController.getSingleUser(email, password)
-  .then((user, err) => {
-    console.log('SUCCESS LOGIN', user);
+  .then((user) => {
+    console.log('SUCCESS LOGIN');
 
     if (!user) {
       res.send(403);

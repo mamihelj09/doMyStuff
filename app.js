@@ -15,11 +15,8 @@ db.authenticate()
 
 app.use(logger('dev'));
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-)
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 app.get('/', (request, response) => {
   response.json({test: 'node js test text' })

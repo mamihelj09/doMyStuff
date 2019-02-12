@@ -1,12 +1,18 @@
-const db = require('../config/database');
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
-function getSingleUser (email, password) {
-  return User.findOne({
+async function getSingleUser (email, password) {
+  const user = await User.findOne({
     where: {
-      email, password
+      email
     }
-  })
+  });
+
+  if (bcrypt.compareSync(password, user.password)) {
+    return user;
+  }
+
+  return null;
 };
 
 module.exports = {
