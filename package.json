@@ -9,9 +9,8 @@
     "body-parser": "^1.18.3",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "jsonwebtoken": "^8.4.0",
     "morgan": "^1.9.1",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
     "pg": "^7.8.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.42.0"
@@ -20,7 +19,6 @@
     "nodemon": "^1.18.10"
   },
   "scripts": {
-    "dev": "nodemon .",
-    "start": "node nodejs-dashboard ."
+    "dev": "nodemon ."
   }
 }
