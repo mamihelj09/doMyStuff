@@ -17,18 +17,20 @@ const User = db.define('user', {
   },
   token: {
     type: Sequelize.INTEGER
-  },
-  job_id: {
-    type: Sequelize.INTEGER
-  },
+  }
 });
 
 User.prototype.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password)
 }
 
-// User.prototype.hashPassword = function(password) {
-
-// }
+User.prototype.responseUser = function() {
+  return {
+    firstName: this.first_name,
+    lastName: this.last_name,
+    email: this.email,
+    id: this.id
+  }
+}
 
 module.exports = User;

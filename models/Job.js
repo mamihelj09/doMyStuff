@@ -10,6 +10,9 @@ const Job = db.define('job', {
   },
   start_bid: {
     type: Sequelize.STRING
+  },
+  user_id: {
+    type: Sequelize.INTEGER,
   }
 });
 

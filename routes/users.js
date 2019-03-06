@@ -9,8 +9,6 @@ router.post('/login', (req, res) => {
   const { email, password} = req.body;
   userController.getSingleUser(email, password)
   .then((user) => {
-    console.log('SUCCESS LOGIN');
-
     if (!user) {
       res.send(401);
     }
@@ -35,8 +33,20 @@ router.get('/me', checkAuth, (req, res) => {
     })
 })
 
-router.post('register', (req, res) => {
-  res.send(200);
+router.put('/register', (req, res) => {
+  const { first_name, last_name, password, email } = req.body;
+
+  userController.createUser(first_name, last_name, password, email)
+    .then((user) => {
+      if (!user) {
+        res.send(403);
+      } else {
+        res.json(200, user);
+      }
+    })
+    .catch((e) => {
+      res.send(500);
+    })
 })
 
 module.exports = router;

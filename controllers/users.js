@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const bcrypt = require('bcryptjs');
 
 async function getSingleUser(email, password) {
   const user = await User.findOne({
@@ -20,12 +21,12 @@ async function getSingleUser(email, password) {
       });
       const updatedUser = await user.update({token});
 
-      return updatedUser;
+      return updatedUser.responseUser();
     } else {
       try {
         jwt.verify(user.token, process.env.JWR_KEY);
 
-        return user;
+        return user.responseUser();
       } catch (e) {
         const token = jwt.sign({
           email,
@@ -35,7 +36,7 @@ async function getSingleUser(email, password) {
         });
 
         const updatedUser = await user.update({token});
-        return updatedUser;
+        return updatedUser.responseUser();
 
       }
     }
@@ -51,11 +52,11 @@ async function verifyAuth(token) {
     }
   });
 
-  if (user) {
-    return user;
+  if (!user) {
+    return null;
   }
 
-  return null;
+  return user.responseUser();
 }
 
 async function getMe(id, email) {
@@ -66,15 +67,34 @@ async function getMe(id, email) {
     }
   });
 
-  if (user) {
-    return user;
+  if (!user) {
+    return null;
   }
 
-  return null;
+  return user.responseUser();
+}
+
+async function createUser(first_name, last_name, password, email) {
+  var salt = bcrypt.genSaltSync(10);
+  var hashPassword = bcrypt.hashSync(password, salt)
+
+  const user = await User.create({
+    first_name,
+    last_name,
+    email,
+    password: hashPassword
+  })
+
+  if (!user) {
+    return null;
+  }
+
+  return user.responseUser();
 }
 
 module.exports = {
   getSingleUser,
   verifyAuth,
-  getMe
+  getMe,
+  createUser
 };
