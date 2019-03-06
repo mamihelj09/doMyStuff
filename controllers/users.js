@@ -16,14 +16,29 @@ async function getSingleUser(email, password) {
         email,
         id: user.id,
       }, process.env.JWR_KEY, {
-        expiresIn: '1h'
+        expiresIn: '12h'
       });
       const updatedUser = await user.update({token});
 
       return updatedUser;
-    }
+    } else {
+      try {
+        jwt.verify(user.token, process.env.JWR_KEY);
 
-    return user;
+        return user;
+      } catch (e) {
+        const token = jwt.sign({
+          email,
+          id: user.id,
+        }, process.env.JWR_KEY, {
+          expiresIn: '12h'
+        });
+
+        const updatedUser = await user.update({token});
+        return updatedUser;
+
+      }
+    }
   }
 
   return null;
@@ -44,7 +59,6 @@ async function verifyAuth(token) {
 }
 
 async function getMe(id, email) {
-  console.log(id, email)
   const user = await User.findOne({
     where: {
       email,
