@@ -18,6 +18,6 @@ const Job = db.define('job', {
   }
 });
 
-Job.belongsTo(User);
+// Job.belongsTo(User);
 
 module.exports = Job;

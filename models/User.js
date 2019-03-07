@@ -22,7 +22,7 @@ const User = db.define('user', {
   }
 });
 
-User.hasMany(Job);
+// User.hasMany(Job);
 
 User.prototype.validatePassword = function(password) {
   return bcrypt.compareSync(password, this.password)

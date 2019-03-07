@@ -3,9 +3,9 @@ const User = require('../models/User');
 
 async function getAllJobs() {
   const jobs = await Job.findAll({
-    include: [
-      {model: User}
-    ]
+    // include: [
+    //   {model: User}
+    // ]
   });
 
   return jobs ? jobs : null;

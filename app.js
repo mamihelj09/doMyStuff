@@ -2,7 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const logger = require('morgan')
 const app = express()
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8022
 require('dotenv').config()
 
 // Database
