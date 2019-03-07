@@ -3,6 +3,7 @@ const router = express.Router();
 
 const userController = require('../controllers/users');
 const checkAuth = require('../middleware/check-auth');
+const dbErrorHelper = require('../services/dbErrorHelper');
 
 // GET single user (login)
 router.post('/login', (req, res) => {
@@ -45,7 +46,8 @@ router.put('/register', (req, res) => {
       }
     })
     .catch((e) => {
-      res.send(500);
+      const { status, error } = dbErrorHelper(e.errors[0].message);
+      res.json(status, error);
     })
 })
 

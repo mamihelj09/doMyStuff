@@ -1,4 +1,6 @@
 const Sequelize = require('sequelize');
+
+const User = require('./User');
 const db = require('../config/database');
 
 const Job = db.define('job', {
@@ -15,5 +17,7 @@ const Job = db.define('job', {
     type: Sequelize.INTEGER,
   }
 });
+
+Job.belongsTo(User);
 
 module.exports = Job;

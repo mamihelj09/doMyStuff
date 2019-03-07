@@ -22,10 +22,8 @@ app.get('/', (request, response) => {
   response.json({test: 'node js test text' })
 })
 
-// Users routes
+// routes
 app.use('/users', require('./routes/users'));
-
-// Jobs routes
 app.use('/jobs', require('./routes/jobs'));
 
 app.listen(PORT, () => {

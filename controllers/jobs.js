@@ -1,13 +1,14 @@
 const Job = require('../models/Job');
+const User = require('../models/User');
 
 async function getAllJobs() {
-  const jobs = await Job.findAll();
+  const jobs = await Job.findAll({
+    include: [
+      {model: User}
+    ]
+  });
 
-  if (!jobs) {
-    return null;
-  }
-
-  return jobs;
+  return jobs ? jobs : null;
 }
 
 async function createNewJob(name, description, startBid, user) {
@@ -18,9 +19,13 @@ async function createNewJob(name, description, startBid, user) {
     user_id: user.id
   });
 
-  if (!job) {
-    return null
-  }
+  return job ? job : null;
+}
+
+async function deleteJob(id) {
+  const job = await Job.destroy({
+    where: { id }
+  })
 
   return job;
 }
@@ -28,4 +33,5 @@ async function createNewJob(name, description, startBid, user) {
 module.exports = {
   getAllJobs,
   createNewJob,
+  deleteJob,
 }

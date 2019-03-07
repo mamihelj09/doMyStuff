@@ -52,11 +52,7 @@ async function verifyAuth(token) {
     }
   });
 
-  if (!user) {
-    return null;
-  }
-
-  return user.responseUser();
+  return user ? user.responseUser() : null;
 }
 
 async function getMe(id, email) {
@@ -67,11 +63,7 @@ async function getMe(id, email) {
     }
   });
 
-  if (!user) {
-    return null;
-  }
-
-  return user.responseUser();
+  return user ? user.responseUser() : null;
 }
 
 async function createUser(first_name, last_name, password, email) {
@@ -85,11 +77,7 @@ async function createUser(first_name, last_name, password, email) {
     password: hashPassword
   })
 
-  if (!user) {
-    return null;
-  }
-
-  return user.responseUser();
+  return user ? user.responseUser() : null;
 }
 
 module.exports = {
